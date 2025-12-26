@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasty Bites - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #d8efff, #b3e0ff); /* Soft gradient background */
+    }
+
+    header {
+      background-color: #dc9f07; 
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    header .logo {
+      width: 60px;
+      vertical-align: middle;
+      border-radius: 50%;
+    }
+
+    header h1 {
+      display: inline-block;
+      margin-left: 10px;
+      font-size: 2em;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.3); /* soft overlay box for contrast */
+      border-radius: 10px;
+      margin: 20px auto;
+      width: 90%;
+    }
+
+    .hero img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .featured {
+      text-align: center;
+      padding: 40px 10px;
+      background: rgba(255, 255, 255, 0.3); /* soft semi-transparent box */
+      border-radius: 15px;
+      width: 90%;
+      margin: 20px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .dishes {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .dish img {
+      width: 200px;
+      height: 150px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      background-color: #e3a20a; /* Light blue footer */
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/logo.jpg" alt="Tasty Bites Logo" style="width:100px; height:auto;" class="logo">
+    
+    <h1>Tasty Bites</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a></li>
+      </ul>
+    </nav>
+  </header>
+ 
+  <section class="hero">
+    <img src="images/hero-banner.jpg" alt="Restaurant Banner">
+    <h2>"Delicious Food, Great Atmosphere"</h2>
+  </section>
+
+  <section class="featured">
+    <h2>Our Special Dishes</h2>
+    <div class="dishes">
+      <div class="dish"><img src="images/diish1.jpg" alt=""><p>Margherita Pizza</p></div>
+      <div class="dish"><img src="images/dishh2.jpg" alt=""><p>Beef Burger</p></div>
+      <div class="dish"><img src="images/dishh3.jpg" alt=""><p>Pasta Carbonara</p></div>
+    </div>
+  </section>
+z
+  <footer>
+    <p>📍 123 Food Street, Flavor City | ☎️ (555) 123-4567</p>
+    <p>🕒 Open: Mon–Sun 11AM–10PM</p>
+  </footer>
+
+  <script>
+    // Update cart count in navigation
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('tastyCart') || '[]');
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const cartCountEl = document.getElementById('cartCount');
+      if (cartCountEl) {
+        cartCountEl.textContent = count;
+      }
+    }
+
+    // Initialize cart count on page load
+    updateCartCount();
+
+    // Listen for storage changes (cart updates from other tabs/pages)
+    window.addEventListener('storage', updateCartCount);
+  </script>
+</body>
+</html>

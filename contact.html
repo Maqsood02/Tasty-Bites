@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasty Bites - Contact</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Page background and font */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e8ba3 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #e4aa0b 0%, #ffc107 100%);
+      color: white;
+      text-align: center;
+      padding: 25px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      border-bottom: 3px solid white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 15px 0 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s;
+      padding: 8px 15px;
+      border-radius: 5px;
+    }
+
+    nav ul li a:hover,
+    .active {
+      background: rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+
+    /* Main Container */
+    .contact-container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    /* Contact Info Section */
+    .contact-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+
+    .info-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 255, 0.95) 100%);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: all 0.3s ease;
+      border-top: 4px solid #e4aa0b;
+      cursor: pointer;
+    }
+
+    .info-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(228, 170, 11, 0.3);
+    }
+
+    .info-card .icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+
+    .info-card h3 {
+      color: #004d99;
+      font-size: 1.3em;
+      margin: 15px 0 10px;
+      font-weight: 700;
+    }
+
+    .info-card p {
+      color: #666;
+      font-size: 1.05em;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Map Section */
+    .map-section {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 255, 0.95) 100%);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .map-section h2 {
+      color: #004d99;
+      font-size: 2em;
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .map-section img {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .map-section img:hover {
+      transform: scale(1.02);
+    }
+
+    /* Contact Form Section */
+    .contact-form {
+      background: linear-gradient(135deg, #004d99 0%, #0066cc 100%);
+      border-radius: 15px;
+      padding: 50px 40px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .contact-form h2 {
+      color: white;
+      font-size: 2.2em;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .form-subtitle {
+      text-align: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.05em;
+      margin-bottom: 35px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    form .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      color: rgba(255, 255, 255, 0.95);
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+      letter-spacing: 0.5px;
+    }
+
+    input, textarea {
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      font-size: 1em;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #999;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #e4aa0b;
+      outline: none;
+      box-shadow: 0 0 12px rgba(228, 170, 11, 0.5);
+      background: white;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .button-group {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #e4aa0b 0%, #ffc107 100%);
+      color: #002147;
+      font-size: 1.1em;
+      padding: 14px 40px;
+      border: 2px solid white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(228, 170, 11, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #ffc107 0%, #e4aa0b 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(228, 170, 11, 0.6);
+    }
+
+    button:active {
+      transform: translateY(-1px);
+    }
+
+    .reset-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+    }
+
+    .reset-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.05em;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+      animation: slideDown 0.3s ease;
+      grid-column: 1 / -1;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, #131313 0%, #150f01 100%);
+      color: white;
+      text-align: center;
+      padding: 30px 0;
+      margin-top: 60px;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
+      border-top: 3px solid #e4aa0b;
+    }
+
+    footer p {
+      margin: 10px 0;
+      font-size: 1.05em;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8em;
+      }
+
+      .contact-info {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form {
+        padding: 30px 20px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      nav ul li {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📞 Contact Us</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="cart.html">🛒 Cart (<span id="cartCount">0</span>)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="contact-container">
+    <!-- Contact Information Cards -->
+    <div class="contact-info">
+      <div class="info-card">
+        <div class="icon">☎️</div>
+        <h3>Phone</h3>
+        <p>(555) 123-4567</p>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">📧</div>
+        <h3>Email</h3>
+        <p>contact@tastybites.com</p>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">📍</div>
+        <h3>Address</h3>
+        <p>123 Food Street<br>Flavor City</p>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">🕒</div>
+        <h3>Hours</h3>
+        <p>Mon–Sun<br>11AM–10PM</p>
+      </div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="map-section">
+      <h2>📍 Find Us</h2>
+      <img src="images/maap.jpg" alt="Restaurant Location Map">
+    </div>
+
+    <!-- Contact Form -->
+    <section class="contact-form">
+      <h2>Get In Touch</h2>
+      <p class="form-subtitle">We'd love to hear from you! Send us a message and we'll respond as soon as possible.</p>
+      
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Your Name *</label>
+          <input type="text" id="name" name="name" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567">
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Subject *</label>
+          <input type="text" id="subject" name="subject" placeholder="How can we help?" required>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="message">Message *</label>
+          <textarea id="message" name="message" placeholder="Tell us what's on your mind..." required></textarea>
+        </div>
+
+        <div class="success-message" id="successMessage">✓ Thank you! Your message has been sent successfully.</div>
+
+        <div class="button-group">
+          <button type="submit">✓ Send Message</button>
+          <button type="reset" class="reset-btn">↻ Clear</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2025 Tasty Bites Restaurant</p>
+    <p>🌟 Delivering Delicious Moments to Your Door 🌟</p>
+  </footer>
+
+  <script>
+    // Update cart count in navigation
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('tastyCart') || '[]');
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const cartCountEl = document.getElementById('cartCount');
+      if (cartCountEl) {
+        cartCountEl.textContent = count;
+      }
+    }
+
+    // Initialize cart count on page load
+    updateCartCount();
+
+    // Listen for storage changes (cart updates from other tabs/pages)
+    window.addEventListener('storage', updateCartCount);
+
+    // Handle form submission
+    const contactForm = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      // Store message in localStorage
+      const messages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+      messages.push({
+        id: 'MSG-' + Date.now(),
+        name,
+        email,
+        subject,
+        message,
+        phone: document.getElementById('phone').value,
+        date: new Date().toLocaleString()
+      });
+      localStorage.setItem('contactMessages', JSON.stringify(messages));
+
+      // Show success message
+      successMessage.style.display = 'block';
+      contactForm.reset();
+
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 4000);
+    });
+  </script>
+</body>
+</html>

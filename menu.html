@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasty Bites - Menu</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Background */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+        url("images/menu.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+
+    /* Header */
+    header {
+      background-color: #e4aa0b;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      border-bottom: 2px solid white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 10px 0 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover,
+    .active {
+      color: #002147;
+      text-decoration: underline;
+    }
+
+    /* Menu Section */
+    .menu-category {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    .menu-category h2 {
+      text-align: center;
+      color: #004d99;
+      border-bottom: 2px solid #87cefa;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+      text-shadow: 1px 1px 2px #fff;
+    }
+
+    /* Dish Grid */
+    .dish-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 10px;
+    }
+
+    .dish-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      overflow: visible;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border: 3px solid #e4aa0b;
+    }
+
+    .dish-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(228, 170, 11, 0.4);
+    }
+
+    .dish-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px 12px 0 0;
+    }
+
+    .dish-info {
+      padding: 15px;
+      flex-grow: 1;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+    }
+
+    .dish-info h3 {
+      margin: 8px 0 8px;
+      color: #004d99;
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+
+    .dish-info p {
+      margin: 0;
+      color: #e4aa0b;
+      font-weight: bold;
+      font-size: 1.15em;
+    }
+
+    /* Hover Details - Side Popup */
+    .dish-details {
+      position: fixed;
+      right: auto;
+      top: auto;
+      transform: none;
+      background: linear-gradient(135deg, #004d99 0%, #0066cc 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      border-radius: 15px;
+      padding: 30px 25px;
+      box-sizing: border-box;
+      box-shadow: 0 12px 40px rgba(0, 77, 153, 0.6), 0 0 30px rgba(228, 170, 11, 0.4);
+      z-index: 100;
+      width: 280px;
+      border: 3px solid #e4aa0b;
+      pointer-events: auto;
+    }
+
+    .dish-card:hover .dish-details {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dish-details p {
+      margin: 12px 0;
+      font-size: 0.95em;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .availability {
+      font-weight: bold;
+      color: #87cefa;
+      margin: 8px 0;
+      font-size: 1.15em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .availability.unavailable {
+      color: #ff6b6b;
+    }
+
+    .order-btn {
+      background: linear-gradient(135deg, #e4aa0b 0%, #ffc107 100%);
+      color: #002147;
+      border: 2px solid #fff;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1em;
+      margin-top: 15px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(228, 170, 11, 0.4);
+    }
+
+    .order-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, #ffc107 0%, #e4aa0b 100%);
+      transform: scale(1.12);
+      box-shadow: 0 8px 20px rgba(228, 170, 11, 0.6);
+    }
+
+    .order-btn:disabled {
+      background: linear-gradient(135deg, #999 0%, #777 100%);
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none;
+    }
+
+    .order-btn:disabled:hover {
+      transform: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #d49008;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 40px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.2);
+      border-top: 2px solid white;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(3px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+      margin: 5% auto;
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .close {
+      color: #004d99;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close:hover {
+      color: #e4aa0b;
+    }
+
+    .modal-content h2 {
+      color: #004d99;
+      margin: 15px 0;
+      font-size: 1.8em;
+      text-align: center;
+    }
+
+    .modal-content p {
+      color: #333;
+      font-size: 1.05em;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .price-display {
+      color: #e4aa0b;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .quantity-control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 25px 0;
+      gap: 15px;
+    }
+
+    .quantity-control label {
+      color: #004d99;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    .quantity-control input {
+      width: 70px;
+      padding: 8px;
+      border: 2px solid #e4aa0b;
+      border-radius: 5px;
+      font-size: 1em;
+      text-align: center;
+    }
+
+    .confirm-order-btn {
+      background: linear-gradient(135deg, #004d99 0%, #0066cc 100%);
+      color: white;
+      padding: 14px 40px;
+      border: 2px solid #e4aa0b;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.05em;
+      width: 100%;
+      margin-top: 20px;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 77, 153, 0.3);
+    }
+
+    .confirm-order-btn:hover {
+      background: linear-gradient(135deg, #0066cc 0%, #004d99 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 77, 153, 0.5);
+    }
+
+    .cancel-btn {
+      background: #999;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    .cancel-btn:hover {
+      background: #777;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+    }
+
+    .success-message {
+      display: none;
+      background: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tasty Bites Menu</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html" class="active">Menu</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">Cart (<span id="cartCount">0</span>)</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Appetizers -->
+  <section class="menu-category">
+    <h2>Appetizers</h2>
+    <div class="dish-grid">
+      <div class="dish-card">
+        <img src="images/garlic-bread.jpg" alt="Garlic Bread">
+        <div class="dish-info"><h3>Garlic Bread</h3><p>₹80</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Crispy garlic flavored bread</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+      
+      <div class="dish-card">
+        <img src="images/bruschetta.jpg" alt="Bruschetta">
+        <div class="dish-info"><h3>Bruschetta</h3><p>₹100</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Toasted bread with tomato & basil</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+      
+      <div class="dish-card">
+        <img src="images/caesar-salad.jpg" alt="Caesar Salad">
+        <div class="dish-info"><h3>Caesar Salad</h3><p>₹120</p></div>
+        <div class="dish-details">
+          <p class="availability">✗ Not Available</p>
+          <p>Fresh romaine with parmesan</p>
+          <button class="order-btn" disabled>Order Now</button>
+        </div>
+      </div>
+      
+      <div class="dish-card">
+        <img src="images\Golden Purses.jpg" alt="Golden Purses">
+        <div class="dish-info"><h3>Golden Purses</h3><p>₹150</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Crispy pastry with savory filling</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+      
+      <div class="dish-card">
+        <img src="images\Feta Flatbread.jpg" alt="Feta Flatbread">
+        <div class="dish-info"><h3>Feta Flatbread</h3><p>₹100</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Soft flatbread with feta cheese</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+      
+      <div class="dish-card">
+        <img src="images\Salami Cups.jpg" alt="Salami Cups">
+        <div class="dish-info"><h3>Salami Cups</h3><p>₹100</p></div>
+        <div class="dish-details">
+          <p class="availability">✗ Not Available</p>
+          <p>Crispy salami appetizer bites</p>
+          <button class="order-btn" disabled>Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images/Paneer Tikka.jpg" alt="Paneer Tikka">
+        <div class="dish-info"><h3>Paneer Tikka</h3><p>₹120</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Marinated paneer cubes with spices</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+      
+      <div class="dish-card">
+        <img src="images\Gobi-manchurian.jpg" alt="Gobi Manchurian">
+        <div class="dish-info"><h3>Gobi Manchurian</h3><p>₹150</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Gobi Manchurian - Spicy fried cauliflower</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Main Courses -->
+  <section class="menu-category">
+    <h2>Main Courses</h2>
+    <div class="dish-grid">
+      <div class="dish-card">
+        <img src="images/margherita-pizza.jpg" alt="Margherita Pizza">
+        <div class="dish-info"><h3>Margherita Pizza</h3><p>₹250</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Classic cheese & tomato pizza with fresh basil</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images/beef-burger.jpg" alt="Beef Burger">
+        <div class="dish-info"><h3>Beef Burger</h3><p>₹280</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Juicy beef patty with fresh veggies & sauce</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images/pasta-carbonara.jpg" alt="Pasta Carbonara">
+        <div class="dish-info"><h3>Pasta Carbonara</h3><p>₹300</p></div>
+        <div class="dish-details">
+          <p class="availability unavailable">✗ Not Available</p>
+          <p>Creamy pasta with bacon & egg</p>
+          <button class="order-btn" disabled>Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images\Michael Graydon.jpg" alt="Michael Graydon">
+        <div class="dish-info"><h3>Michael Graydon</h3><p>₹1000</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Premium specialty dish - Chef's recommendation</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images\Butter Chicken.jpg" alt="Butter Chicken">
+        <div class="dish-info"><h3>Butter Chicken</h3><p>₹1500</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Tender chicken in creamy butter sauce</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images\Indian Meals.jpg" alt="Indian Meals">
+        <div class="dish-info"><h3>Indian Meals</h3><p>₹300</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Traditional Indian cuisine with spices</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Desserts -->
+  <section class="menu-category">
+    <h2>Desserts</h2>
+    <div class="dish-grid">
+      <div class="dish-card">
+        <img src="images/chocolate-cake.jpg" alt="Chocolate Cake">
+        <div class="dish-info"><h3>Chocolate Cake</h3><p>₹150</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Rich & decadent chocolate cake</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images/ice-cream.jpg" alt="Ice Cream">
+        <div class="dish-info"><h3>Ice Cream</h3><p>₹100</p></div>
+        <div class="dish-details">
+          <p class="availability unavailable">✗ Not Available</p>
+          <p>Creamy frozen dessert</p>
+          <button class="order-btn" disabled>Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images/cheesecake.jpg" alt="Cheesecake">
+        <div class="dish-info"><h3>Cheesecake</h3><p>₹180</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Smooth & creamy New York style</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images\Berry Delight.jpg" alt="Berry Delight">
+        <div class="dish-info"><h3>Berry Delight</h3><p>₹300</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Fresh berries with whipped cream</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images\Kesar Kulfi.jpg" alt="Kesar Kulfi">
+        <div class="dish-info"><h3>Kesar Kulfi</h3><p>₹250</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Traditional saffron ice cream</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+
+      <div class="dish-card">
+        <img src="images\Basundi.jpg" alt="Basundi">
+        <div class="dish-info"><h3>Basundi</h3><p>₹200</p></div>
+        <div class="dish-details">
+          <p class="availability">✓ Available</p>
+          <p>Sweet condensed milk dessert</p>
+          <button class="order-btn">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Order Modal -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="dishName">Dish Name</h2>
+      <p>Please confirm your order</p>
+      <div class="price-display" id="dishPrice">₹0</div>
+      
+      <div class="quantity-control">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" min="1" value="1">
+      </div>
+
+      <div class="success-message" id="successMessage"></div>
+
+      <div class="modal-buttons">
+        <button class="confirm-order-btn" id="confirmOrderBtn">Confirm Order</button>
+        <button class="cancel-btn" id="cancelBtn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Tasty Bites Restaurant</p>
+  </footer>
+
+  <script>
+    // Modal functionality
+    const modal = document.getElementById("orderModal");
+    const quantityInput = document.getElementById("quantity");
+    const successMsg = document.getElementById("successMessage");
+    const closeBtn = document.querySelector(".close");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const confirmOrderBtn = document.getElementById("confirmOrderBtn");
+    
+    let currentDish = null;
+    let currentPrice = 0;
+    let originatingCardForModal = null;
+
+    // Get all order buttons (including disabled ones for now)
+    const orderButtons = document.querySelectorAll(".order-btn");
+
+    // Add click event to all enabled order buttons
+    orderButtons.forEach(btn => {
+      // Skip disabled buttons
+      if (!btn.disabled) {
+        btn.addEventListener("click", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Get dish info from card
+          const card = this.closest(".dish-card");
+          const dishName = card.querySelector(".dish-info h3").textContent;
+          const dishPrice = card.querySelector(".dish-info p").textContent;
+          
+          // remember originating card so confirm handler can read the image reliably
+          originatingCardForModal = card;
+          
+          currentDish = dishName;
+          currentPrice = dishPrice;
+          
+          // Update modal
+          document.getElementById("dishName").textContent = dishName;
+          document.getElementById("dishPrice").textContent = dishPrice;
+          quantityInput.value = 1;
+          successMsg.style.display = "none";
+          
+          // Show modal
+          modal.style.display = "block";
+          console.log("Modal opened for:", dishName);
+        });
+      }
+    });
+
+    // Close modal button
+    closeBtn.addEventListener("click", function() {
+      modal.style.display = "none";
+      console.log("Modal closed");
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function(event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+
+    // Confirm order button: save order to localStorage cart
+    confirmOrderBtn.addEventListener("click", function() {
+      const quantity = Number(quantityInput.value);
+
+      if (!quantity || quantity < 1) {
+        alert("Please enter a valid quantity!");
+        return;
+      }
+
+      // parse numeric price (e.g. "₹250")
+      const priceNum = Number((currentPrice + '').replace(/[^0-9.]/g, '')) || 0;
+
+      // get image src from the originating card stored earlier
+      let imgSrc = '';
+      try {
+        if (originatingCardForModal && originatingCardForModal.querySelector('img')) {
+          imgSrc = originatingCardForModal.querySelector('img').getAttribute('src') || '';
+        }
+      } catch (e) {
+        imgSrc = '';
+      }
+
+      const item = {
+        name: currentDish,
+        price: priceNum,
+        quantity: quantity,
+        total: priceNum * quantity,
+        image: imgSrc,
+        addedAt: Date.now()
+      };
+
+      try {
+        const cart = JSON.parse(localStorage.getItem('tastyCart') || '[]');
+        cart.push(item);
+        localStorage.setItem('tastyCart', JSON.stringify(cart));
+        console.log('Saved item to tastyCart:', item);
+        console.log('Current tastyCart:', localStorage.getItem('tastyCart'));
+      } catch (err) {
+        console.error('Failed saving cart item:', err);
+        alert('Could not add item to cart. See console for details.');
+        return;
+      }
+
+      updateCartCount();
+
+      // Show success message
+      successMsg.style.display = "block";
+      successMsg.textContent = `✓ ${quantity} ${currentDish}(s) added to cart!`;
+
+      setTimeout(() => {
+        modal.style.display = "none";
+        successMsg.style.display = "none";
+      }, 1200);
+
+      // reset originating card reference
+      originatingCardForModal = null;
+    });
+
+    // Cancel order button
+    cancelBtn.addEventListener("click", function() {
+      modal.style.display = "none";
+      console.log("Order cancelled");
+    });
+
+    // Prevent negative quantities
+    quantityInput.addEventListener("change", function() {
+      if (this.value < 1 || this.value === "") {
+        this.value = 1;
+      }
+    });
+
+    // Keyboard close (ESC key)
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape" && modal.style.display === "block") {
+        modal.style.display = "none";
+      }
+    });
+
+    // Update cart count in nav
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('tastyCart') || '[]');
+      const count = cart.reduce((s, i) => s + Number(i.quantity || 0), 0);
+      const el = document.getElementById('cartCount');
+      if (el) el.textContent = count;
+    }
+
+    // Initialize cart count on page load
+    updateCartCount();
+  </script>
+</body>
+</html>
